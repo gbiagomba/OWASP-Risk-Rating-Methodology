@@ -1,5 +1,5 @@
 # install.ps1
-# Windows installer for program_name (satisfies RULE 3)
+# Windows installer for riskforge (satisfies RULE 3)
 
 param(
     [string]$InstallMethod = "auto"

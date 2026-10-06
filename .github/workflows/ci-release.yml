@@ -1,15 +1,15 @@
 # .github/workflows/ci-release.yml
 #
-# TEMPLATE INSTRUCTIONS FOR CODING AGENT:
-# 1. Replace `PROJECT_TYPE` with either "rust" or "python".
-# 2. If PROJECT_TYPE == "rust":
-#    - Replace `program_name` in BINARY_NAME with the final binary name (Cargo [[bin]] name).
-#    - Ensure Cargo.toml and src/main.rs are set up accordingly.
-# 3. If PROJECT_TYPE == "python":
-#    - Replace `program_name` in PYTHON_PACKAGE_NAME with the package/distribution name.
-#    - Ensure pyproject.toml / setup.cfg / setup.py matches that name.
-# 4. Ensure there is a CHANGELOG.md with headings like "## v1.0.0". If not present,
-#    the workflow will fall back to the tag message for release notes.
+# Push to any branch runs the build, lint and test gate. A tag matching `v*`
+# additionally cross-compiles the ARM64 targets and publishes a GitHub release
+# with every platform binary and its SHA256 checksum.
+#
+# Release notes come from the matching `## [X.Y.Z]` section of CHANGELOG.md,
+# falling back to the annotated tag message.
+#
+# Publishing to Docker Hub is opt-in: set the repository variable
+# PUBLISH_DOCKER to "true" once DOCKER_USERNAME and DOCKER_PASSWORD secrets
+# exist.
 
 name: CI and Release
 

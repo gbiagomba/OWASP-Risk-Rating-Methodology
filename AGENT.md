@@ -220,7 +220,7 @@ awk "/^## $VERSION/,/^## /{if (/^## $VERSION/) f=1; else if (/^## /) f=0; if (f 
 ### Templates (MUST REPLACE PLACEHOLDERS)
 | File | Action | Notes |
 |------|--------|-------|
-| README.md | Replace `program_name`, fill Background/Lore, Features, Flags | Preserve ToC, headers, emojis |
+| README.md | Keep Flags and Usage in step with the clap definitions in `src/cli.rs` | Preserve ToC, headers, emojis |
 | Makefile | Replace `APP_NAME` | Lite (simple) vs Pro (flagship: +fmt,clippy,check,ci) |
 | Dockerfile | Replace `APP_NAME`, `APP_VERSION`, `ENTRYPOINT` | Preserve multi-stage build, ARG order |
 | CHANGELOG.md | Add entries per Rule 5 | Format: `## [X.Y.Z] - YYYY-MM-DD` + Added/Changed/Fixed |

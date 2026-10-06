@@ -1,6 +1,6 @@
 @echo off
 REM install.bat
-REM Simple Windows installer for program_name (satisfies RULE 3)
+REM Simple Windows installer for riskforge (satisfies RULE 3)
 
 setlocal enabledelayedexpansion
 
