@@ -35,6 +35,15 @@ pub struct Cli {
     pub assess: AssessArgs,
 }
 
+// `Assess` carries the whole argument set while the informational subcommands
+// carry almost nothing. The enum measures exactly 200 bytes on
+// aarch64-apple-darwin, which is clippy's default threshold, so
+// `large_enum_variant` fires on targets where the layout is a few bytes
+// wider, x86_64-pc-windows-msvc among them. clap's derive requires the
+// payload inline, since `Box<T>` does not implement `Args`, and exactly one
+// of these is constructed per process at argv-parse time, so the size
+// difference costs nothing.
+#[allow(clippy::large_enum_variant)]
 #[derive(Debug, Subcommand)]
 pub enum Commands {
     /// Score a threat and write its rating. The default when no subcommand
