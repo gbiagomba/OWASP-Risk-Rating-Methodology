@@ -1,7 +1,6 @@
 # Rust
 /target/
 **/*.rs.bk
-Cargo.lock
 
 # IDEs
 .idea/
@@ -23,6 +22,7 @@ test_output.csv
 *.tmp
 temp/
 test_data/
+test-output/
 
 # Build artifacts
 *.exe

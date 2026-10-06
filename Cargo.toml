@@ -1,14 +1,37 @@
 [package]
-name = "binary_name"          # MUST match APP_NAME
-version = "1.0.0"              # SemVer
+name = "riskforge"
+version = "1.0.0"
 authors = ["Gilles Biagomba <gilles.infosec@gmail.com>"]
 edition = "2021"
+rust-version = "1.82"
 license = "GPL-3.0"
-description = "Brief description"
-repository = "https://github.com/gbiagomba/project_name"
-keywords = ["cli", "tool", "category"]
+description = "Score threat-model risk with the OWASP Risk Rating Methodology (Risk = Likelihood x Impact) and document how the rating was derived"
+repository = "https://github.com/gbiagomba/OWASP-Risk-Rating-Methodology"
+readme = "README.md"
+keywords = ["owasp", "risk", "threat-model", "security", "cli"]
 categories = ["command-line-utilities"]
 
+[lib]
+name = "riskforge"
+path = "src/lib.rs"
+
 [[bin]]
-name = "binary_name"           # MUST match package name
+name = "riskforge"
 path = "src/main.rs"
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[dependencies]
+chrono = { version = "0.4.45", default-features = false, features = ["clock", "std", "serde"] }
+clap = { version = "4.5.61", features = ["derive"] }
+csv = "1.4.0"
+html-escape = "0.2.15"
+rusqlite = { version = "0.40.2", features = ["bundled"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.151"
+serde_yaml_ng = "0.10.0"
+thiserror = "2.0.21"

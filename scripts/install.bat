@@ -4,8 +4,8 @@ REM Simple Windows installer for program_name (satisfies RULE 3)
 
 setlocal enabledelayedexpansion
 
-set APP_NAME=program_name
-set REPO=gbiagomba/%APP_NAME%
+set APP_NAME=riskforge
+set REPO=gbiagomba/OWASP-Risk-Rating-Methodology
 set INSTALL_DIR=%ProgramFiles%\%APP_NAME%
 
 echo ?? Installing %APP_NAME%...

@@ -7,8 +7,8 @@ param(
 
 $ErrorActionPreference = "Stop"
 
-$APP_NAME = "program_name"
-$REPO = "gbiagomba/$APP_NAME"
+$APP_NAME = "riskforge"
+$REPO = "gbiagomba/OWASP-Risk-Rating-Methodology"
 $INSTALL_DIR = "$env:ProgramFiles\$APP_NAME"
 
 Write-Host "?? Installing $APP_NAME..." -ForegroundColor Cyan

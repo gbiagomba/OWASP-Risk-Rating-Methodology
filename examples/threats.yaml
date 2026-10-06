@@ -1,0 +1,76 @@
+# riskforge batch input.
+#
+# Run:   riskforge assess -i examples/threats.yaml
+# Or:    riskforge assess -i examples/threats.yaml -f all -o out/ --mkdir
+#
+# Every factor is scored 0 to 9. A score of 0 is a real score and counts
+# toward its average; it does not mean "unscored". Run `riskforge factors`
+# for the option text behind each number, or `riskforge schema` for the
+# machine-readable contract.
+
+threats:
+  # The worked example from the OWASP Risk Rating template spreadsheet.
+  # Rates Low: likelihood 3.375 (MEDIUM) against overall impact 2.25 (LOW).
+  - title: Full database theft from datacenter
+    id: db-theft-datacenter
+    notes: Reference example from the OWASP Risk Rating template.
+    factors:
+      skill_level: 4
+      motive: 1
+      opportunity: 4
+      size: 5
+      ease_of_discovery: 3
+      ease_of_exploit: 3
+      awareness: 4
+      intrusion_detection: 3
+      loss_of_confidentiality: 2
+      loss_of_integrity: 0
+      loss_of_availability: 0
+      loss_of_accountability: 9
+      financial_damage: 1
+      reputation_damage: 1
+      non_compliance: 0
+      privacy_violation: 5
+
+  # An unauthenticated, tool-discoverable path to customer records.
+  - title: Unauthenticated export endpoint discloses customer records
+    id: unauth-export-disclosure
+    location: src/api/export.rs
+    factors:
+      skill_level: 3
+      motive: 9
+      opportunity: 9
+      size: 9
+      ease_of_discovery: 9
+      ease_of_exploit: 7
+      awareness: 6
+      intrusion_detection: 8
+      loss_of_confidentiality: 9
+      loss_of_integrity: 1
+      loss_of_availability: 1
+      loss_of_accountability: 7
+      financial_damage: 7
+      reputation_damage: 9
+      non_compliance: 7
+      privacy_violation: 7
+
+  # A logged-and-reviewed, privileged-only integrity risk.
+  - title: Operator can edit audit records without a second approval
+    id: audit-record-tampering
+    factors:
+      skill_level: 3
+      motive: 4
+      opportunity: 0
+      size: 2
+      ease_of_discovery: 3
+      ease_of_exploit: 5
+      awareness: 1
+      intrusion_detection: 3
+      loss_of_confidentiality: 0
+      loss_of_integrity: 7
+      loss_of_availability: 0
+      loss_of_accountability: 7
+      financial_damage: 3
+      reputation_damage: 4
+      non_compliance: 7
+      privacy_violation: 0

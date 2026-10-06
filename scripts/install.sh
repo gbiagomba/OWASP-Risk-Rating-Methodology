@@ -4,8 +4,8 @@
 
 set -e
 
-APP_NAME="program_name"
-REPO="gbiagomba/${APP_NAME}"
+APP_NAME="riskforge"
+REPO="gbiagomba/OWASP-Risk-Rating-Methodology"
 INSTALL_DIR="/usr/local/bin"
 
 echo "?? Installing ${APP_NAME}..."
