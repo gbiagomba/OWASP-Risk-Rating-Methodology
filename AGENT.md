@@ -1,4 +1,4 @@
-# AGENT INSTRUCTIONS - Rust/Python CLI Project Template
+# AGENT INSTRUCTIONS - riskforge (Rust CLI)
 
 **Audience**: AI coding agents | **Purpose**: Mandatory requirements for project development and delivery
 
@@ -15,7 +15,7 @@ cargo fmt --all && cargo clippy --all-targets -- -D warnings && cargo test --all
 **Prohibition**: NEVER deliver untested, unformatted, or broken code.
 
 ### Rule 2: Project File Hygiene
-**Required files**: README.md, Makefile, Dockerfile, CHANGELOG.md, .gitignore, .version-tracking.md (create from .version-tracking-template.md)
+**Required files**: README.md, Makefile, Dockerfile, CHANGELOG.md, .gitignore, .version-tracking.md
 **Test artifact management**: Add to `.gitignore`: `output.txt`, `test_output.*`, `*.log`, `*.tmp`, `temp/`, `test_data/`; Remove from git: `git rm --cached <file>`
 
 ### Rule 3: Cross-Platform Install Scripts
@@ -108,7 +108,6 @@ See Dockerfile template. MUST update: `APP_NAME`, `APP_VERSION`, `APP_DESCRIPTIO
    - Parser bug (src/parser.rs:42)
    ```
 5. **Update .version-tracking.md (HIGH DETAIL)**:
-   - Create from `.version-tracking-template.md` if not exists
    - See template for required format: function names, file paths:line numbers, implementation specifics, testing results
 
 ### Commit Workflow
@@ -225,7 +224,7 @@ awk "/^## $VERSION/,/^## /{if (/^## $VERSION/) f=1; else if (/^## /) f=0; if (f 
 | Makefile | Replace `APP_NAME` | Lite (simple) vs Pro (flagship: +fmt,clippy,check,ci) |
 | Dockerfile | Replace `APP_NAME`, `APP_VERSION`, `ENTRYPOINT` | Preserve multi-stage build, ARG order |
 | CHANGELOG.md | Add entries per Rule 5 | Format: `## [X.Y.Z] - YYYY-MM-DD` + Added/Changed/Fixed |
-| .version-tracking.md | Create from template, HIGH DETAIL | See .version-tracking-template.md (260 lines) |
+| .version-tracking.md | Append per release, HIGH DETAIL | Function names, file paths with line numbers, testing results |
 | scripts/install.sh | Replace `APP_NAME`, `REPO` | OS/arch detection, package mgr hierarchy |
 | scripts/install.ps1 | Replace `$APP_NAME`, `$REPO` | Windows PowerShell installer |
 | scripts/install.bat | Replace `APP_NAME`, `REPO` | Windows Batch installer |
@@ -248,17 +247,22 @@ awk "/^## $VERSION/,/^## /{if (/^## $VERSION/) f=1; else if (/^## /) f=0; if (f 
 
 **Note**: Dual-licensed project (GPL-3.0 + Commercial) - respect both tracks.
 
-### Source Agent Files (REFERENCE ONLY)
-ChatGPT_AGENTS.md, Claude_AGENTS.md, Orginal_AGENTS.md - Consolidated into AGENT.md, reference if needed.
+### Project Source
+| Path | Purpose |
+|------|---------|
+| src/model/ | The methodology: factor catalog, scoring, severity matrices |
+| src/input/ | Input paths: file, interactive prompts, JSON Schema |
+| src/report/ | One module per output format |
+| tests/ | Integration tests, including the spreadsheet parity gate |
+| examples/ | Example batch input |
 
-### Git Submodules (USE GIT COMMANDS)
-| Submodule | Purpose | Init/Update |
-|-----------|---------|-------------|
-| rules/ | Claude Code rules, hooks, workflow | `git submodule update --init --recursive` / `--remote rules` |
-| Skills/ | Reusable agent skills, templates | `git submodule update --init --recursive` / `--remote Skills` |
+**Methodology changes** (a factor, an option, a band threshold, a matrix cell)
+require a citation to the OWASP source and a test pinning the new behavior.
+`tests/spreadsheet_parity.rs` must keep passing: it reproduces the worked
+example from the OWASP Risk Rating template cell by cell.
 
 ### Config Files
-.claude/settings.local.json (local, don't commit), .gitmodules (submodule defs), .gitignore (test artifacts per Rule 2)
+.claude/settings.local.json (local, don't commit), .gitignore (test artifacts per Rule 2)
 
 ---
 

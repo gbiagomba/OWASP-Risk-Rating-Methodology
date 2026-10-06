@@ -41,11 +41,24 @@ Methodology and documents how each rating was derived.
 
 - Project scaffold filled out for this tool: `Cargo.toml`, `Makefile` (upgraded from the Lite variant to Pro, which supplies the `ci` target the README documents), `Dockerfile`, `README.md`, install scripts and the CI workflow.
 
+### Removed
+
+- `ChatGPT_AGENTS.md`, `Claude_AGENTS.md` and `Orginal_AGENTS.md`: roughly 97 KB of template documents that `AGENT.md` itself labelled as superseded reference copies of its own content.
+- `.version-tracking-template.md`: the template, already instantiated as `.version-tracking.md`.
+- The `Skills/` and `rules/` git submodules and `.gitmodules`: two unrelated third-party rule collections, empty in the working tree, which `git clone --recursive` would otherwise pull into a clone of this tool.
+
 ### Fixed
 
 - `Dockerfile`: the dependency-cache layer copied `Cargo.lock` unconditionally while the file was gitignored and absent, so `docker build` failed at that layer. The copy now tolerates its absence, and the lock file is committed, which also makes builds reproducible.
 - `scripts/install.sh`, `install.ps1` and `install.bat`: `REPO` was derived from the binary name. The binary is `riskforge` but the repository is `OWASP-Risk-Rating-Methodology`, so every installer resolved a release URL that does not exist. `REPO` is now set explicitly.
 - `.github/workflows/ci-release.yml`: `actions/checkout` raised from v6 to v7 across all 7 call sites and `actions/setup-python` from v6 to v7, applying two Dependabot updates whose branches had been pushed without a pull request ever being opened.
+- `.github/workflows/ci-release.yml`: the workflow file was invalid, so every run failed before a single job started. Three job-level `if:` conditions referenced the `env` context, which GitHub Actions does not expose at job level. `PROJECT_TYPE` is constant for this repository, so the tag gate alone is the correct condition.
+- `.github/workflows/ci-release.yml`: `docker-build` declared `needs: [test-linux, test-macos, test-windows]`, none of which exist in this workflow. It now depends on `build-test`.
+- `.github/workflows/ci-release.yml`: the Docker jobs built and pushed an image named `ssltriage`, left over from an unrelated project, and targeted a Dockerfile stage named `final` that does not exist. Both now use the configured binary name and the default stage, and `docker-build` smoke-tests the image it produces.
+- `.github/workflows/ci-release.yml`: `publish-docker` required Docker Hub credentials unconditionally, so it would have failed every release in a repository without them. It is now opt-in through the `PUBLISH_DOCKER` repository variable.
+- `.github/workflows/ci-release.yml`: the build matrix used the retired `macos-13` runner. Replaced with `macos-15-intel`, which keeps x64 macOS coverage alongside ARM64 on `macos-14`.
+- `.github/workflows/ci-release.yml`: release-notes extraction matched `## v1.0.0` while the changelog heading reads `## [1.0.0] - DATE`, so every release silently fell back to the tag message. It now matches the real heading and stops at the next heading or horizontal rule, so internal notes cannot leak into published release notes.
+- `.github/workflows/ci-release.yml`: quoted `$GITHUB_OUTPUT` and the checksum loop glob, clearing the remaining shellcheck findings. `actionlint` now reports the workflow clean.
 
 ---
 
